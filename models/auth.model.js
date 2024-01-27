@@ -14,7 +14,7 @@ exports.registerFunctionModel=(name,email,password)=>{
 
 
     return new Promise((resolve,reject)=>{
-        mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{
+        mongoose.connect(url).then(()=>{
             return User.findOne({email:email})
         }).then((user)=>{
             if(user){
@@ -50,11 +50,11 @@ exports.registerFunctionModel=(name,email,password)=>{
 // 
 
 
-exports.loginFunctionModel=(email,password)=>{
-    return new Promise((resolve,reject)=>{
-        mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{
-
+exports.loginFunctionModel= (email,password)=>{ 
+    return new Promise((resolve,reject)=>{    
+        mongoose.connect(url).then(()=>{
            return User.findOne({email:email})
+           
 
         }).then((user)=>{
             if(user){
@@ -75,7 +75,8 @@ exports.loginFunctionModel=(email,password)=>{
 
             }
 
-        }).catch(()=>{
+        }).catch((err)=>{
+            mongoose.disconnect()
             reject(err)
         })
 

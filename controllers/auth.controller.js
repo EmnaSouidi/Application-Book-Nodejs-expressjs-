@@ -15,9 +15,6 @@ exports.postRegisterData=(req,res,next)=>{
     })
 }
 
-
-
-
 exports.getLoginPage=(req,res,next)=>{
     res.render('login')
 }
@@ -25,7 +22,17 @@ exports.getLoginPage=(req,res,next)=>{
 exports.postLoginData=(req,res,next)=>{
     authModel.loginFunctionModel(req.body.email, req.body.password).then((id)=>{
         req.session.userId=id
+        res.redirect('/')
     }).catch((err)=>{
         console.log(err)
     })
 }
+
+
+exports.logoutFunctionController=(req,res,next)=>{
+    req.session.destroy(()=>{
+        res.redirect('/login')
+
+    })
+
+}  

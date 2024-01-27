@@ -10,5 +10,7 @@ route.post('/register',body,authController.postRegisterData);
 route.get('/login',authController.getLoginPage);
 route.post('/login',body,authController.postLoginData)
 
+route.get('/logout',authController.logoutFunctionController);
+
 module.exports=route;
  
