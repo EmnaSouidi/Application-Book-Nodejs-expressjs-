@@ -5,6 +5,8 @@ const RouterBook=require('./routers/book.route')
 const routerAuth=require('./routers/auth.route')
 const session= require('express-session')
 var mongoDBStore= require('connect-mongodb-session')(session);
+const flash = require('connect-flash')
+
 // const dotenv= require('dotenv');
 // dotenv.config()
 
@@ -22,6 +24,7 @@ var Store=new mongoDBStore({
     
     collection:'sessions'
   })
+  app.use(flash())
   app.use(session({
     secret:'This is a secret',
     store:Store,
@@ -41,12 +44,17 @@ app.use('/',routerAuth)
 // })
 
 
-// app.get('/contact', (req, res, next) => {
-//     res.render('contact')
-// })
+app.get('/contact', (req, res, next) => {
+    res.render('contact',{verifUser:req.session.userId})
+})
 
-// app.get('/about', (req, res, next) => {
-//     res.render('about')
+app.get('/about', (req, res, next) => {
+    res.render('about',{verifUser:req.session.userId})
+})
+
+
+// app.get('/addbook', (req, res, next) => {
+//   res.render('addbook',{verifUser:req.session.userId})
 // })
 
 // app.get('/books', (req, res, next) => {

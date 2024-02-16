@@ -1,26 +1,27 @@
-const { rejects } = require('assert')
+// const { rejects } = require('assert')
 const mongoose = require('mongoose')
-const { resolve } = require('path')
+// const { resolve } = require('path')
 
 
 var schemabook=mongoose.Schema({
     // _id:String,
     title:String,
     description:String,
-    auther:String,
+    author:String,
     price:Number,
     image:String,
+    userId:String
 })
 
-var book = mongoose.model('Book',schemabook)
-var url= 'mongodb://localhost:27017/library'
+let Book = mongoose.model('book',schemabook)
+let url= 'mongodb://localhost:27017/library'
 
 
 exports.getThreeBooks=()=>{
     return new Promise((resolve,reject)=>{
         mongoose.connect(url)
     .then(()=>{ 
-        return book.find({}).limit(3)
+        return Book.find({}).limit(3)
     }).then(books=>{
         mongoose.disconnect()
         resolve(books)
@@ -35,7 +36,7 @@ exports.getAllBooks=()=>{
     return new Promise((resolve,reject)=>{
         mongoose.connect(url)
     .then(()=>{ 
-        return book.find({})
+        return Book.find({})
     }).then(books=>{
         mongoose.disconnect()
         resolve(books)
@@ -50,7 +51,7 @@ exports.getOneBookDetails=(id)=>{
     return new Promise((resolve,reject)=>{
         mongoose.connect(url)
     .then(()=>{ 
-        return book.findById(id)
+        return Book.findById(id)
     }).then(books=>{
         mongoose.disconnect()
         resolve(books)
@@ -58,4 +59,28 @@ exports.getOneBookDetails=(id)=>{
     
 
     })
+}
+exports.postDataBookModel=(title,description,author,price,image,userId)=>{
+    return new Promise((resolve,reject)=>{
+        mongoose.connect(url).then(()=>{
+
+
+            let book=new Book({
+                title:title,
+                description:description,
+                author:author,
+                price:price,
+                image:image,
+                userId:userId
+            })
+              return book.save()
+    
+}).then(()=>{
+    mongoose.disconnect()
+    resolve('added')
+}).catch((err)=>{
+    mongoose.disconnect()
+    reject(err)
+})
+})
 }

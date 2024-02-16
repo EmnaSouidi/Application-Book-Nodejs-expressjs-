@@ -67,27 +67,14 @@ exports.loginFunctionModel= (email,password)=>{
                         mongoose.disconnect()
                         reject('invalid password')
                     }
-
                 })
             }else{
                 mongoose.disconnect()
                 reject("we don't have this user in our database")
-
             }
-
         }).catch((err)=>{
             mongoose.disconnect()
             reject(err)
         })
-
-
-
-
-
-
     })
-
-
-
-
 }

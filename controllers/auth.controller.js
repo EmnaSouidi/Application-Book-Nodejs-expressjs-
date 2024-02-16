@@ -4,19 +4,22 @@ const authModel=require('../models/auth.model')
 
 
 exports.getRegisterPage=(req,res,next)=>{
-    res.render('register')
+    
+    res.render('register',{verifUser:req.session.userId,message:req.flash('error')[0]})//{verifUser:req.session.userId}: pour vérifier si user enregistré ?
 }
 
 exports.postRegisterData=(req,res,next)=>{
     authModel.registerFunctionModel(req.body.name, req.body.email, req.body.password).then((user)=>{
         res.redirect('/login')
-    }).catch((msg)=>{
-        console.log(msg)
+    }).catch((err)=>{
+        // console.log(msg)
+        req.flash('error',err)
+        res.redirect('/register')
     })
 }
 
 exports.getLoginPage=(req,res,next)=>{
-    res.render('login')
+    res.render('login',{verifUser:req.session.userId, message:req.flash('error')[0]})
 }
 
 exports.postLoginData=(req,res,next)=>{
@@ -24,7 +27,9 @@ exports.postLoginData=(req,res,next)=>{
         req.session.userId=id
         res.redirect('/')
     }).catch((err)=>{
-        console.log(err)
+        // console.log(err)
+        req.flash('error',err)
+        res.redirect('/login')
     })
 }
 

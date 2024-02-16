@@ -20,8 +20,11 @@
         </div>
       
         <!-- 2 column grid layout for inline styling -->
-    
-      
+        <% if (message){%>
+        <div class="alert alert-danger" role="alert">
+         <%=message%>
+        </div>
+        <% } %>
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
       

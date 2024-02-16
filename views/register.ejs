@@ -23,7 +23,11 @@
           <input type="password" id="form2Example2" name="password" class="form-control" placeholder="Password" />
           
         </div>
-      
+        <% if (message){%>
+        <div class="alert alert-danger" role="alert">
+          <%=message%>
+         </div>
+         <% } %>
         <!-- 2 column grid layout for inline styling -->
     
       
