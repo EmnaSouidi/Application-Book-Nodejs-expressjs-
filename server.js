@@ -3,6 +3,7 @@ const path= require('path')
 const RouterHome=require('./routers/home.route')
 const RouterBook=require('./routers/book.route')
 const routerAuth=require('./routers/auth.route')
+const routerMyBooks=require('./routers/mybooks.route')
 const session= require('express-session')
 var mongoDBStore= require('connect-mongodb-session')(session);
 const flash = require('connect-flash')
@@ -37,7 +38,8 @@ var Store=new mongoDBStore({
 
 app.use('/',RouterHome) 
 app.use('/books',RouterBook)
-app.use('/',routerAuth) 
+app.use('/',routerAuth)
+app.use('/mybooks',routerMyBooks) 
 
 // app.get('/details', (req, res, next) => {
 //     res.render('details')
@@ -57,17 +59,13 @@ app.get('/about', (req, res, next) => {
 //   res.render('addbook',{verifUser:req.session.userId})
 // })
 
-// app.get('/books', (req, res, next) => {
-//     res.render('books')
+// app.get('/mybooks', (req, res, next) => {
+//     res.render('mybooks',{verifUser:req.session.userId})
 // })
 
-// app.get('/login', (req, res, next) => {
-//     res.render('login')
-// })
 
-// app.get('/register', (req, res, next) => {
-//     res.render('register')
-// })
+
+
 
 
 app.listen(3000, () => {

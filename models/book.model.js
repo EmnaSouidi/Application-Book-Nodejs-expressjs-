@@ -84,3 +84,27 @@ exports.postDataBookModel=(title,description,author,price,image,userId)=>{
 })
 })
 }
+
+exports.getMyBooks=()=>{
+    return new Promise((resolve,reject)=>{
+        mongoose.connect(url)
+    .then(()=>{ 
+        return Book.find({})
+    }).then(books=>{
+        mongoose.disconnect()
+        resolve(books)
+    }).catch(err=>reject(err))
+    })
+}
+
+exports.deletebook=(id)=>{
+    return new Promise((resolve,reject)=>{
+        mongoose.connect(url)
+    .then(()=>{ 
+        return Book.deleteOne({_id:id})
+    }).then(books=>{
+        mongoose.disconnect()
+        resolve(true)
+    }).catch(err=>reject(err))
+    })
+}
