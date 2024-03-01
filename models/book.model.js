@@ -1,4 +1,5 @@
 // const { rejects } = require('assert')
+const { deserialize } = require('bson')
 const mongoose = require('mongoose')
 // const { resolve } = require('path')
 
@@ -77,7 +78,7 @@ exports.postDataBookModel=(title,description,author,price,image,userId)=>{
     
 }).then(()=>{
     mongoose.disconnect()
-    resolve('added')
+    resolve('Added')
 }).catch((err)=>{
     mongoose.disconnect()
     reject(err)
@@ -89,7 +90,7 @@ exports.getMyBooks=()=>{
     return new Promise((resolve,reject)=>{
         mongoose.connect(url)
     .then(()=>{ 
-        return Book.find({})
+        return Book.find()
     }).then(books=>{
         mongoose.disconnect()
         resolve(books)
@@ -107,4 +108,32 @@ exports.deletebook=(id)=>{
         resolve(true)
     }).catch(err=>reject(err))
     })
+}
+
+exports.getPageUpdateBookModel=(id)=>{
+    return new Promise((resolve,reject)=>{
+        mongoose.connect(url)
+    .then(()=>{ 
+        return Book.findById(id) 
+    }).then(books=>{
+        mongoose.disconnect()
+        resolve(books)
+    }).catch(err=>reject(err))
+    })
+}
+exports.postUpdateBookModel=(bookId, title, description, author, price, filename, userId)=>{
+    return new Promise((resolve,reject)=>{
+        mongoose.connect(url).then(()=>{ 
+
+
+         return  Book.updateOne({_id:bookId},{title:title,description:description,author:author,price:price,image:filename,userId:userId})
+    
+}).then(()=>{
+    mongoose.disconnect()
+    resolve('Updated')
+}).catch((err)=>{
+    mongoose.disconnect()
+    reject(err)
+})
+})
 }

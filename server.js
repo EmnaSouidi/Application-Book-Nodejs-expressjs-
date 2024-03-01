@@ -4,6 +4,7 @@ const RouterHome=require('./routers/home.route')
 const RouterBook=require('./routers/book.route')
 const routerAuth=require('./routers/auth.route')
 const routerMyBooks=require('./routers/mybooks.route')
+const routeContact=require('./routers/contact.route')
 const session= require('express-session')
 var mongoDBStore= require('connect-mongodb-session')(session);
 const flash = require('connect-flash')
@@ -40,15 +41,16 @@ app.use('/',RouterHome)
 app.use('/books',RouterBook)
 app.use('/',routerAuth)
 app.use('/mybooks',routerMyBooks) 
+app.use('/',routeContact)
 
 // app.get('/details', (req, res, next) => {
 //     res.render('details')
 // })
 
 
-app.get('/contact', (req, res, next) => {
-    res.render('contact',{verifUser:req.session.userId})
-})
+// app.get('/contact', (req, res, next) => {
+//     res.render('contact',{verifUser:req.session.userId})
+// })
 
 app.get('/about', (req, res, next) => {
     res.render('about',{verifUser:req.session.userId})
